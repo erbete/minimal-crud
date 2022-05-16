@@ -104,7 +104,7 @@ public class UnitTests
         var tResult = tValidator.Validate(tAddBookRequest);
         Assert.True(tResult.IsValid);
 
-        /// UUID not empty
+        /// ISBN not empty
         tAddBookRequest = new AddBookRequest()
         {
             ISBN = Guid.Empty,

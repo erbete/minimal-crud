@@ -9,9 +9,9 @@ internal static class BookApi
     public static void Configure(WebApplication app)
     {
         app.MapGet("/book/all", ListAllHandlerAsync);
-        app.MapGet("/book/{uuid}", GetHandlerAsync);
+        app.MapGet("/book/{isbn}", GetHandlerAsync);
         app.MapPost("/book", AddHandlerAsync);
-        app.MapDelete("/book/{uuid}", RemoveHandlerAsync);
+        app.MapDelete("/book/{isbn}", RemoveHandlerAsync);
     }
 
     private static async Task<IResult> ListAllHandlerAsync(IRepository repository)
