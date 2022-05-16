@@ -41,12 +41,12 @@ internal static class BookApi
             return Results.BadRequest(errors);
         }
 
-        bool isRemoved = await repository.IsBookRecordRemovedAsync(newBook.ISBN);
+        bool isRemoved = await repository.IsBookRecordRemovedAsync(Guid.Parse(newBook.ISBN));
         if (isRemoved) return Results.BadRequest();
 
         await repository.AddBookAsync(new BookData()
         {
-            ISBN = newBook.ISBN,
+            ISBN = Guid.Parse(newBook.ISBN),
             Title = newBook.Title.Trim(),
             Author = newBook.Author.Trim(),
             Pages = newBook.Pages

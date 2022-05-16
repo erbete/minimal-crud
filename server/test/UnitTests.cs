@@ -36,7 +36,7 @@ public class UnitTests
     [Fact]
     public void AddBookRequest_should_contain_properties()
     {
-        var tISBN = Guid.NewGuid();
+        var tISBN = "83b80db9-112b-4d7c-89c9-5d5ba71882b9";
         var tTitle = "test-title";
         var tAuthor = "test-ticker";
         var tPages = 123;
@@ -49,7 +49,7 @@ public class UnitTests
         };
 
         Assert.True(tAddBookRequest.GetType().GetProperty("ISBN") != null);
-        Assert.IsType<Guid>(tAddBookRequest.ISBN);
+        Assert.IsType<string>(tAddBookRequest.ISBN);
 
         Assert.True(tAddBookRequest.GetType().GetProperty("Title") != null);
         Assert.IsType<string>(tAddBookRequest.Title);
@@ -86,7 +86,7 @@ public class UnitTests
     [Fact]
     public void AddBookRequestValidator_should_validate_input()
     {
-        var tISBN = Guid.NewGuid();
+        var tISBN = "83b80db9-112b-4d7c-89c9-5d5ba71882b9";
         var tTitle = "test-title";
         var tAuthor = "test-ticker";
         var tPages = 123;
@@ -107,7 +107,7 @@ public class UnitTests
         /// ISBN not empty
         tAddBookRequest = new AddBookRequest()
         {
-            ISBN = Guid.Empty,
+            ISBN = string.Empty,
             Title = tTitle,
             Author = tAuthor,
             Pages = tPages

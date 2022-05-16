@@ -10,7 +10,9 @@ public class AddBookRequestValidator : AbstractValidator<AddBookRequest>
             .NotNull()
                 .WithMessage("ISBN must not be empty.")
             .NotEmpty()
-                .WithMessage("ISBN must not be empty.");
+                .WithMessage("ISBN must not be empty.")
+            .Must(val => Guid.TryParse(val, out var _))
+                .WithMessage("Invalid ISBN format.");
 
         RuleFor(c => c.Title)
             .NotNull()
