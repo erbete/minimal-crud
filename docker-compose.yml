@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: "minimal-crud-postgres"
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: test
+      POSTGRES_PASS: test
+      POSTGRES_DB: books_db
+    volumes:
+      - psql:/var/lib/postgresql/data
+      - ./server/src/Data/Queries/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - dotnet
+
+  server:
+    container_name: "minimal-crud-server"
+    ports:
+      - "5250:80"
+    build:
+      context: .
+    depends_on:
+      - minimal-crud-postgres
+    networks:
+      - dotnet
+
+networks:
+  dotnet:
+
+
+volumes:
+  psql:
