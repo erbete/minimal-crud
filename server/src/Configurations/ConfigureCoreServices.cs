@@ -16,6 +16,15 @@ public static class ConfigureCoreServices
         services.AddSingleton<IRepository, Repository>();
         services.AddTransient<IBookQueries, BookQueries>();
 
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
+
         return services;
+    }
+
+    public static void UseCoreServices(this WebApplication app)
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CRUD v1"));
     }
 }
