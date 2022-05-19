@@ -8,10 +8,19 @@ internal static class BookApi
 {
     public static void Configure(WebApplication app)
     {
-        app.MapGet("/book/all", ListAllHandlerAsync);
-        app.MapGet("/book/{isbn}", GetHandlerAsync);
-        app.MapPost("/book", AddHandlerAsync);
-        app.MapDelete("/book/{isbn}", RemoveHandlerAsync);
+        app.MapGet("/book/all", ListAllHandlerAsync)
+            .Produces(StatusCodes.Status200OK);
+
+        app.MapGet("/book/{isbn}", GetHandlerAsync)
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status200OK);
+
+        app.MapPost("/book", AddHandlerAsync)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status201Created);
+
+        app.MapDelete("/book/{isbn}", RemoveHandlerAsync)
+            .Produces(StatusCodes.Status204NoContent);
     }
 
     private static async Task<IResult> ListAllHandlerAsync(IRepository repository)
