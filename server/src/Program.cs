@@ -13,5 +13,5 @@ builder.Services.AddTransient<IDbConnection>(_ =>
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseCoreServices();
-app.ConfigureApi();
+app.UseApi();
 app.Run();
