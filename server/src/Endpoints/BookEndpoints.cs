@@ -2,9 +2,9 @@ using CRUD.Data;
 using CRUD.Models;
 using FluentValidation;
 
-namespace CRUD.Api;
+namespace CRUD.Endpoints;
 
-internal static class BookApi
+internal static class BookEndpoints
 {
     public static void Configure(WebApplication app)
     {

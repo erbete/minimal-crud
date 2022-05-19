@@ -1,5 +1,5 @@
 using System.Data;
-using CRUD.Api;
+using CRUD.Endpoints;
 using CRUD.Configurations;
 using CRUD.Extensions;
 using Npgsql;
@@ -13,5 +13,5 @@ builder.Services.AddTransient<IDbConnection>(_ =>
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseCoreServices();
-app.UseApi();
+app.UseEndpoints();
 app.Run();
