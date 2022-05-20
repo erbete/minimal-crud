@@ -1,6 +1,8 @@
-using CRUD.Data;
+using CRUD.Endpoints.Events.Commands;
+using CRUD.Endpoints.Events.Queries;
 using CRUD.Models;
 using FluentValidation;
+using MediatR;
 
 namespace CRUD.Endpoints;
 
@@ -23,22 +25,21 @@ internal static class BookEndpoints
             .Produces(StatusCodes.Status204NoContent);
     }
 
-    private static async Task<IResult> ListAllHandlerAsync(IRepository repository)
+    private static async Task<IResult> ListAllHandlerAsync(IMediator mediator)
     {
-        var books = await repository.ListBooksAsync();
-        var response = books.Select(b => new BookResponse(b.ISBN, b.Title, b.Author, b.Pages));
-        return Results.Ok(response);
+        var books = await mediator.Send(new ListAllBooksQuery());
+        return Results.Ok(books);
     }
 
-    private static async Task<IResult> GetHandlerAsync(IRepository repository, Guid isbn)
+    private static async Task<IResult> GetHandlerAsync(IMediator mediator, Guid isbn)
     {
-        var book = await repository.GetBookAsync(isbn);
+        var book = await mediator.Send(new GetBookQuery(isbn));
         if (book is null) return Results.NotFound();
-        return Results.Ok(new BookResponse(book.ISBN, book.Title, book.Author, book.Pages));
+        return Results.Ok(book);
     }
 
     private static async Task<IResult> AddHandlerAsync(
-        IRepository repository,
+        IMediator mediator,
         IValidator<AddBookRequest> validator,
         AddBookRequest newBook
     )
@@ -50,23 +51,14 @@ internal static class BookEndpoints
             return Results.BadRequest(errors);
         }
 
-        bool isRemoved = await repository.IsBookRecordRemovedAsync(Guid.Parse(newBook.ISBN));
-        if (isRemoved) return Results.BadRequest();
-
-        await repository.AddBookAsync(new BookData()
-        {
-            ISBN = Guid.Parse(newBook.ISBN),
-            Title = newBook.Title.Trim(),
-            Author = newBook.Author.Trim(),
-            Pages = newBook.Pages
-        });
-
-        return Results.Created($"/book/{newBook.ISBN}", newBook);
+        var book = await mediator.Send(new AddBookCommand(newBook));
+        if (book is null) return Results.BadRequest();
+        return Results.Created($"/book/{book.ISBN}", book);
     }
 
-    private static async Task<IResult> RemoveHandlerAsync(IRepository repository, Guid isbn)
+    private static async Task<IResult> RemoveHandlerAsync(IMediator mediator, Guid isbn)
     {
-        await repository.RemoveBookAsync(isbn);
+        await mediator.Send(new RemoveBookCommand(isbn));
         return Results.NoContent();
     }
 }
