@@ -25,25 +25,33 @@ public class Repository : IRepository
     public async Task<List<BookData>> ListBooksAsync() =>
         (await _db.QueryAsync<BookData>(_bookQueries.GetAll)).AsList();
 
-    public async Task<BookData> AddBookAsync(BookData newBook)
+    public async Task AddBookAsync(BookData newBook)
     {
-        // if not already added; insert the data 
+        // if not already added; add the book 
         var book = await GetBookAsync(newBook.ISBN);
         if (book is null)
-            return await _db.ExecuteScalarAsync<BookData>(_bookQueries.Insert, newBook);
+        {
+            await _db.ExecuteAsync(_bookQueries.Insert, newBook);
+            return;
+        }
 
-        // if not modified; return the data
+        // do nothing if not modified
         bool isModified =
             book.Title != newBook.Title ||
             book.Author != newBook.Author ||
             book.Pages != newBook.Pages;
-        if (!isModified) return book;
+        if (!isModified) return;
 
-        // if the data is not null and modified; add a new snapshot and return it 
+        // if the book is not null and modified; add a new snapshot of it
         // this does NOT overwrite or change any previous snapshots
-        return await _db.ExecuteScalarAsync<BookData>(
-                _bookQueries.Update,
-                new { book.Id, newBook.Title, newBook.Author, newBook.Pages }
+        await _db.ExecuteAsync(
+                _bookQueries.Update, new
+                {
+                    book.Id,
+                    newBook.Title,
+                    newBook.Author,
+                    newBook.Pages
+                }
         );
     }
 
