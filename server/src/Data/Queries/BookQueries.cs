@@ -33,7 +33,7 @@ public class BookQueries : IBookQueries
             LEFT JOIN book_snapshots bs
                 ON b.id = bs.book_id
         WHERE b.isbn = @ISBN
-        AND br.book_id IS NULL
+            AND br.book_id IS NULL
         ORDER BY bs.modified_at DESC
         LIMIT 1;
     ";
@@ -65,6 +65,6 @@ public class BookQueries : IBookQueries
             LEFT JOIN book_removed br
                 ON b.id = br.book_id 
         WHERE b.isbn = @ISBN
-        AND br.book_id IS NOT NULL
+            AND br.book_id IS NOT NULL
     ";
 }
