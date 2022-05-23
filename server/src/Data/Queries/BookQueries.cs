@@ -11,10 +11,10 @@ public class BookQueries : IBookQueries
                b.created_at, 
                bs.modified_at
         FROM books b
-        LEFT JOIN book_removed br
-        ON b.id = br.book_id
-        LEFT JOIN book_snapshots bs
-        ON b.id = bs.book_id
+            LEFT JOIN book_removed br
+                ON b.id = br.book_id
+            LEFT JOIN book_snapshots bs
+                ON b.id = bs.book_id
         WHERE br.book_id IS NULL
         ORDER BY b.id, bs.modified_at DESC;
     ";
@@ -28,10 +28,10 @@ public class BookQueries : IBookQueries
                b.created_at, 
                bs.modified_at
         FROM books b
-        LEFT JOIN book_removed br
-        ON b.id = br.book_id
-        LEFT JOIN book_snapshots bs
-        ON b.id = bs.book_id
+            LEFT JOIN book_removed br
+                ON b.id = br.book_id
+            LEFT JOIN book_snapshots bs
+                ON b.id = bs.book_id
         WHERE b.isbn = @ISBN
         AND br.book_id IS NULL
         ORDER BY bs.modified_at DESC
@@ -62,8 +62,8 @@ public class BookQueries : IBookQueries
 
     public string IsRecordRemoved => @"
         SELECT 1 FROM books b
-        LEFT JOIN book_removed br
-        ON b.id = br.book_id 
+            LEFT JOIN book_removed br
+                ON b.id = br.book_id 
         WHERE b.isbn = @ISBN
         AND br.book_id IS NOT NULL
     ";
