@@ -1,4 +1,4 @@
-using CRUD.Models;
+using CRUD.Features.Books.Contracts.DTO;
 
 namespace CRUD.Data;
 

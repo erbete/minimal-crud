@@ -1,8 +1,11 @@
-using CRUD.Data;
-using CRUD.Models;
 using MediatR;
 
-namespace CRUD.Routes.Events.Queries;
+using CRUD.Data;
+using CRUD.Features.Books.Contracts.DTO;
+
+namespace CRUD.Features.Books.Contracts;
+
+public record ListAllBooksQuery() : IRequest<IReadOnlyList<BookResponse>>;
 
 public class ListAllBooksQueryHandler : IRequestHandler<ListAllBooksQuery, IReadOnlyList<BookResponse>>
 {

@@ -1,4 +1,4 @@
-namespace CRUD.Models;
+namespace CRUD.Features.Books.Contracts.DTO;
 
 public class BookData
 {

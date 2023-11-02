@@ -1,15 +1,15 @@
 using FluentValidation;
 using MediatR;
-using CRUD.Routes.Events.Commands;
-using CRUD.Routes.Events.Queries;
-using CRUD.Models;
 using Carter;
 
-namespace CRUD.Routes;
+using CRUD.Features.Books.Contracts;
+using CRUD.Features.Books.Contracts.DTO;
 
-public class BookRoutes : CarterModule
+namespace CRUD.Features.Books;
+
+public class Routes : CarterModule
 {
-    public BookRoutes() : base("/api/book")
+    public Routes() : base("/api/books")
     {
         // this.RequireAuthorization();
     }

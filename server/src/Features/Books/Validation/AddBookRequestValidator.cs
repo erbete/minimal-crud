@@ -1,6 +1,7 @@
 using FluentValidation;
+using CRUD.Features.Books.Contracts.DTO;
 
-namespace CRUD.Models.Validators;
+namespace CRUD.Features.Books.Validation;
 
 public class AddBookRequestValidator : AbstractValidator<AddBookRequest>
 {

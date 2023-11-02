@@ -1,8 +1,9 @@
-using CRUD.Data;
-using CRUD.Routes.Events.Commands;
 using MediatR;
+using CRUD.Data;
 
-namespace CRUD.Routes.Events.Command;
+namespace CRUD.Features.Books.Contracts;
+
+public record RemoveBookCommand(Guid ISBN) : IRequest;
 
 public class RemoveBookHandler : IRequest
 {

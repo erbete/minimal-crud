@@ -1,7 +1,8 @@
 using System.Data;
-using CRUD.Data.Queries;
-using CRUD.Models;
 using Dapper;
+
+using CRUD.Data.Queries;
+using CRUD.Features.Books.Contracts.DTO;
 
 namespace CRUD.Data;
 

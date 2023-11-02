@@ -1,9 +1,10 @@
 using FluentValidation;
 using Carter;
+
 using CRUD.Data;
 using CRUD.Data.Queries;
-using CRUD.Models;
 using CRUD.Extensions;
+using CRUD.Features.Books.Contracts.DTO;
 
 namespace CRUD.Configurations;
 

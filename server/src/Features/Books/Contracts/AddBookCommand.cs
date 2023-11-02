@@ -1,9 +1,11 @@
-using CRUD.Data;
-using CRUD.Routes.Events.Commands;
-using CRUD.Models;
 using MediatR;
 
-namespace CRUD.Routes.Events.Command;
+using CRUD.Data;
+using CRUD.Features.Books.Contracts.DTO;
+
+namespace CRUD.Features.Books.Contracts;
+
+public record AddBookCommand(AddBookRequest NewBook) : IRequest<BookResponse>;
 
 public class AddBookHandler : IRequestHandler<AddBookCommand, BookResponse?>
 {
