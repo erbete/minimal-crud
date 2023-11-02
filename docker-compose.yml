@@ -17,17 +17,6 @@ services:
     networks:
       - dotnet
 
-  server:
-    container_name: "minimal-crud-server"
-    ports:
-      - "5250:80"
-    build:
-      context: .
-    depends_on:
-      - minimal-crud-postgres
-    networks:
-      - dotnet
-
 networks:
   dotnet:
 

@@ -1,9 +1,7 @@
-using System.Reflection;
 using CRUD.Data;
 using CRUD.Data.Queries;
 using CRUD.Models;
-using FluentValidation.AspNetCore;
-using MediatR;
+using FluentValidation;
 
 namespace CRUD.Configurations;
 
@@ -11,11 +9,9 @@ public static class ConfigureCoreServices
 {
     public static IServiceCollection AddCoreServices(this IServiceCollection services)
     {
-        services.AddMediatR(Assembly.GetExecutingAssembly());
+        services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
-        services.AddFluentValidation(options =>
-            options.RegisterValidatorsFromAssemblyContaining<AddBookRequest>()
-        );
+        services.AddValidatorsFromAssemblyContaining<AddBookRequest>();
 
         services.AddSingleton<IRepository, Repository>();
         services.AddTransient<IBookQueries, BookQueries>();

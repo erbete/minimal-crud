@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CRUD.Endpoints.Events.Command;
 
-public class RemoveBookHandler : IRequestHandler<RemoveBookCommand>
+public class RemoveBookHandler : IRequest
 {
     private readonly IRepository _repository;
 
@@ -13,9 +13,8 @@ public class RemoveBookHandler : IRequestHandler<RemoveBookCommand>
         _repository = repository;
     }
 
-    public async Task<Unit> Handle(RemoveBookCommand request, CancellationToken cancellationToken)
+    public async Task Handle(RemoveBookCommand request, CancellationToken cancellationToken)
     {
         await _repository.RemoveBookAsync(request.ISBN);
-        return Unit.Value;
     }
 }

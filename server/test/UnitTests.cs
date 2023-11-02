@@ -114,7 +114,7 @@ public class UnitTests
         };
         tResult = tValidator.Validate(tAddBookRequest);
         Assert.False(tResult.IsValid);
-        Assert.Equal(tResult.Errors.Select(e => e.ErrorMessage).First(), "ISBN must not be empty.");
+        Assert.Equal("ISBN must not be empty.", tResult.Errors.Select(e => e.ErrorMessage).First());
 
         /// Title not empty
         tAddBookRequest = new AddBookRequest()
@@ -126,7 +126,7 @@ public class UnitTests
         };
         tResult = tValidator.Validate(tAddBookRequest);
         Assert.False(tResult.IsValid);
-        Assert.Equal(tResult.Errors.Select(e => e.ErrorMessage).First(), "Title must not be empty.");
+        Assert.Equal("Title must not be empty.", tResult.Errors.Select(e => e.ErrorMessage).First());
 
         /// Author not empty
         tAddBookRequest = new AddBookRequest()
@@ -138,7 +138,7 @@ public class UnitTests
         };
         tResult = tValidator.Validate(tAddBookRequest);
         Assert.False(tResult.IsValid);
-        Assert.Equal(tResult.Errors.Select(e => e.ErrorMessage).First(), "Author must not be empty.");
+        Assert.Equal("Author must not be empty.", tResult.Errors.Select(e => e.ErrorMessage).First());
 
         /// Pages not < 0 
         tAddBookRequest = new AddBookRequest()
@@ -150,6 +150,6 @@ public class UnitTests
         };
         tResult = tValidator.Validate(tAddBookRequest);
         Assert.False(tResult.IsValid);
-        Assert.Equal(tResult.Errors.Select(e => e.ErrorMessage).First(), "Must have more than zero pages.");
+        Assert.Equal("Must have more than zero pages.", tResult.Errors.Select(e => e.ErrorMessage).First());
     }
 }
