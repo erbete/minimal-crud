@@ -1,44 +1,50 @@
-using CRUD.Endpoints.Events.Commands;
-using CRUD.Endpoints.Events.Queries;
-using CRUD.Models;
 using FluentValidation;
 using MediatR;
+using CRUD.Routes.Events.Commands;
+using CRUD.Routes.Events.Queries;
+using CRUD.Models;
+using Carter;
 
-namespace CRUD.Endpoints;
+namespace CRUD.Routes;
 
-internal static class BookEndpoints
+public class BookRoutes : CarterModule
 {
-    public static void Configure(WebApplication app)
+    public BookRoutes() : base("/api/book")
     {
-        app.MapGet("/book/all", ListAllHandlerAsync)
+        // this.RequireAuthorization();
+    }
+
+    public override void AddRoutes(IEndpointRouteBuilder app)
+    {
+        app.MapGet("/all", ListAllHandlerAsync)
             .Produces(StatusCodes.Status200OK);
 
-        app.MapGet("/book/{isbn}", GetHandlerAsync)
+        app.MapGet("/{isbn}", GetHandlerAsync)
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status200OK);
 
-        app.MapPost("/book", AddHandlerAsync)
+        app.MapPost("/", AddHandlerAsync)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status201Created);
 
-        app.MapDelete("/book/{isbn}", RemoveHandlerAsync)
+        app.MapDelete("/{isbn}", RemoveHandlerAsync)
             .Produces(StatusCodes.Status204NoContent);
     }
 
-    private static async Task<IResult> ListAllHandlerAsync(IMediator mediator)
+    private async Task<IResult> ListAllHandlerAsync(IMediator mediator)
     {
         var books = await mediator.Send(new ListAllBooksQuery());
         return Results.Ok(books);
     }
 
-    private static async Task<IResult> GetHandlerAsync(IMediator mediator, Guid isbn)
+    private async Task<IResult> GetHandlerAsync(IMediator mediator, Guid isbn)
     {
         var book = await mediator.Send(new GetBookQuery(isbn));
         if (book is null) return Results.NotFound();
         return Results.Ok(book);
     }
 
-    private static async Task<IResult> AddHandlerAsync(
+    private async Task<IResult> AddHandlerAsync(
         IMediator mediator,
         IValidator<AddBookRequest> validator,
         AddBookRequest newBook
@@ -56,7 +62,7 @@ internal static class BookEndpoints
         return Results.Created($"/book/{book.ISBN}", book);
     }
 
-    private static async Task<IResult> RemoveHandlerAsync(IMediator mediator, Guid isbn)
+    private async Task<IResult> RemoveHandlerAsync(IMediator mediator, Guid isbn)
     {
         await mediator.Send(new RemoveBookCommand(isbn));
         return Results.NoContent();

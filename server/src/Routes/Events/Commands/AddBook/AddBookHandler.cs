@@ -1,9 +1,9 @@
 using CRUD.Data;
-using CRUD.Endpoints.Events.Commands;
+using CRUD.Routes.Events.Commands;
 using CRUD.Models;
 using MediatR;
 
-namespace CRUD.Endpoints.Events.Command;
+namespace CRUD.Routes.Events.Command;
 
 public class AddBookHandler : IRequestHandler<AddBookCommand, BookResponse?>
 {
@@ -16,11 +16,11 @@ public class AddBookHandler : IRequestHandler<AddBookCommand, BookResponse?>
 
     public async Task<BookResponse?> Handle(AddBookCommand request, CancellationToken cancellationToken)
     {
-        Guid isbn = Guid.Parse(request.newBook.ISBN);
+        Guid isbn = Guid.Parse(request.NewBook.ISBN);
         bool isRemoved = await _repository.IsBookRecordRemovedAsync(isbn);
         if (isRemoved) return null;
 
-        var newBook = request.newBook;
+        var newBook = request.NewBook;
         await _repository.AddBookAsync(new BookData()
         {
             ISBN = isbn,

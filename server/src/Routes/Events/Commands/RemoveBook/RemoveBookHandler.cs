@@ -1,8 +1,8 @@
 using CRUD.Data;
-using CRUD.Endpoints.Events.Commands;
+using CRUD.Routes.Events.Commands;
 using MediatR;
 
-namespace CRUD.Endpoints.Events.Command;
+namespace CRUD.Routes.Events.Command;
 
 public class RemoveBookHandler : IRequest
 {

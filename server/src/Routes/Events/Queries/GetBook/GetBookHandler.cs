@@ -2,7 +2,7 @@ using CRUD.Data;
 using CRUD.Models;
 using MediatR;
 
-namespace CRUD.Endpoints.Events.Queries;
+namespace CRUD.Routes.Events.Queries;
 
 public class GetBookQueryHandler : IRequestHandler<GetBookQuery, BookResponse?>
 {
