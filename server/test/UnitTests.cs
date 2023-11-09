@@ -1,6 +1,6 @@
 using System.Data;
-using CRUD.Models;
-using CRUD.Models.Validators;
+using CRUD.Features.Books.Contracts.DTO;
+using CRUD.Features.Books.Validation;
 
 namespace CRUD.test;
 
