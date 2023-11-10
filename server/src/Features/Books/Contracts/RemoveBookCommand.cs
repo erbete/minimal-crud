@@ -5,7 +5,7 @@ namespace CRUD.Features.Books.Contracts;
 
 public record RemoveBookCommand(Guid ISBN) : IRequest;
 
-public class RemoveBookHandler : IRequest
+public class RemoveBookHandler : IRequestHandler<RemoveBookCommand> 
 {
     private readonly IRepository _repository;
 
